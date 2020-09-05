@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style> 
+
+    body {background-color: rgb(176, 230, 176);}
+  
+    
+    .card {
+  box-shadow: 0 20px 20px 0 rgba(163, 34, 34, 0.2);
+  background-color:rgb(0, 255, 234);
+
+  max-width: auto;
+  margin: auto;
+  
+  font-family: arial;
+  overflow: auto;
+  border: 5px solid #020611;
+
+
+
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: rgb(231, 9, 9);
+}
+    
+p {
+  
+  color: rgb(91, 31, 170);
+}
+
+img {
+  float: left;
+}
+
+
+button {
+ 
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: rgb(255, 255, 255);
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 20%;
+  font-size: 18px;
+ ;
+}
+
+h1 {
+ 
+    margin: 0px auto;
+    display: block;
+}
+
+
+li {
+ 
+ margin: 0px auto;
+ display: block;
+ font-size: 25px;
+ color:blue;
+}
+
+    
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendering HTML File</title>
+</head>
+<body>
+    <button id="button">Show Data</button>
+    <br>
+    <h1>Github Users</h1>
+    <div id="people"></div>
+    
+    <script>
+        document.getElementById('button').addEventListener('click', showData);
+        function showData() {
+            var req = new XMLHttpRequest();
+            req.open('GET', "https://api.github.com/users", true);
+            req.onload = function(){
+                if(req.status==200){
+                    var people = JSON.parse(req.responseText);
+                    var display ='';
+                    for (var i in people){
+                        display +=
+
+                        '<div class="card">'+
+                        '<img src='+people[i].avatar_url+'  width="200" height= "350"  >' +
+                        '<ul>' +
+                        '<li style="color:black;" >id:'+people[i].id+'</li>'+
+                        '<li style="color:black;" >login:'+people[i].login+'</li>'+
+                        '<li>Repos:<a href>'+people[i].repos_url+'</a></li>'+
+                        '<li>Events:<a href>'+people[i].events_url+'</a></li>'+
+                        '<li>Organization:<a href>'+people[i].organizations_url+'</a></li>'+
+                        '<li>Follower:<a href>'+people[i].followers_url+'</a></li>'+
+                        '</ul>'+
+                        '</div>'
+                       
+
+                    }
+                    document.getElementById('people').innerHTML=display;
+                }
+            }
+            req.send();
+        
+        }
+    </script>
+</body>
+</html>
+
+
